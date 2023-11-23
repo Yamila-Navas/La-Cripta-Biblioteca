@@ -1,0 +1,36 @@
+
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Usuarios{% endblock 'title' %}
+
+{% block 'content' %}
+{% load static %}
+
+
+    {% include "usuarios/partials/by_initial.html" %}
+
+
+    <ul class='list'>
+        {% for usuario in usuarios %}
+            <li>{{usuario}}
+                <span>
+                    <a href="{% url "usuarios:detallar" id=usuario.id%}" class='btn btn-ops-v'>
+                        <img src="{% static 'img/ver.png' %}" width=25px height=25px alt="Ver">
+                    </a>
+                    <a href="{% url "usuarios:editar" id=usuario.id %}" class='btn btn-ops'>
+                        <img src="{% static 'img/editar(2).png' %}" width=25px  alt="Editar">
+                    </a>
+                    <a href="{% url "usuarios:confirmacion-borrar" id=usuario.id %}" class='btn btn-ops'>
+                        <img src="{% static 'img/eliminar-simbolo.png' %}" width=25px  alt="Borrar">
+                    </a>
+                         
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    
+
+{% endblock 'content' %}
+
+

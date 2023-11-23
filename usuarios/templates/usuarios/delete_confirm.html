@@ -1,0 +1,43 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Confirmar eliminación{% endblock 'title' %}
+
+{% block 'content' %}
+
+    <div class="card">
+        <h5 class="card-header text-center">Confirmar eliminación</h5>
+        <div class="card-body">
+          <h5 class="card-title text-center">¿Estás seguro de que deseas eliminar a {{usuario.nombre}} {{usuario.apellido}}?</h5>
+          
+          {% if usuario.adeuda %}
+            <p class="card-text text-center">Este usuario registra una o mas devoluciones pendientes,<br> puede hacer las devoluciones correspondientes<br> antes de eliminar el registro de lo contrario no se registrara<br> que los libros vuelvan a estar disponibles en la biblioteca.</p>
+            
+            <div class= 'd-flex justify-content-center'>
+                <form method="post" action="{% url 'usuarios:borrarYDevolverLibro' id=usuario.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-warning mx-2 my-3" type="submit">Devolver y eliminar</button>
+                </form>
+                
+                <form method="post" action="{% url 'usuarios:borrar' id=usuario.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-warning mx-2 my-3" type="submit">Si, eliminar</button>
+                </form>
+
+                <a class="btn btn-warning mx-2 my-3" href="{% url 'usuarios:listar' %}">Cancelar</a>
+            </div>
+          {% else %}
+            <div class='d-flex justify-content-center'>
+                <form method="post" action="{% url 'usuarios:borrar' id=usuario.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-warning mx-2 my-3" type="submit">Sí, eliminar</button>
+                </form>
+                <a class="btn btn-warning mx-2 my-3" href="{% url 'usuarios:listar' %}">Cancelar</a>
+            </div>
+            
+          {% endif %}    
+        </div>
+      </div>
+
+
+{% endblock 'content' %}
+

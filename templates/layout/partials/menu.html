@@ -1,0 +1,56 @@
+{% load static %}
+
+<!--Aca empieza el menu-->
+<nav class="navbar navbar-expand-lg navbar-light bg-">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">La Cripta</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+          {% if request.resolver_match.url_name != "inicio" %}
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" onclick="history.back(); return false;">
+                  <img src={% static 'img/flecha-atras.png' %} alt="Volver" width=20px>
+                </a>
+            </li>
+          {% endif %}
+          
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "inicio" %}">Inicio</a>
+            </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url "colección:listar" %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Colección
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url "colección:listar" %}">Ver todos</a></li>
+              <li><a class="dropdown-item" href="{% url "colección:crear" %}">Añadir</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="{% url "colección:listar" %}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Miembros
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url "usuarios:listar" %}">Ver todos</a></li>
+              <li><a class="dropdown-item" href="{% url "usuarios:crear" %}">Añadir</a></li>
+            </ul>
+          </li>
+
+        </ul>
+        {% if request.resolver_match.url_name != "detallar" %}
+            <form class="d-flex " {% if request.resolver_match.url_name == "colección:listar" %}action="{% url "colección:listar" %}"{% elif request.resolver_match.url_name == "usuarios:listar" %}action="{% url "usuarios:listar" %}"{% endif %} method='GET'>
+            <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search" name='search'>
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+

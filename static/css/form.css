@@ -1,0 +1,12 @@
+input {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid var(--color-text);
+    padding: 5px;
+    width: 100%;
+}
+
+.btn-guardar {
+    width: 80%;
+    
+}

@@ -1,0 +1,75 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Libro: nombre del libro{% endblock 'title' %}
+
+
+{% block 'content' %}
+    {% load crispy_forms_tags %}
+
+    <div class="container my-3" >
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <!--Aca empiezan los datos del usuario-->
+                <div class="card">
+                    <h5 class="card-header"><center>{{usuario.nombre}}, {{usuario.apellido}}</center></h5>
+                    <div class="card-body">
+                      <p class="card-text"><b>Email:&nbsp;</b> {{usuario.mail}}</p>
+                      <p class="card-text"><b>Telefono:&nbsp;</b> {{usuario.tel}}</p>
+                      <p class="card-text"><b>Localidad:&nbsp;</b> {{usuario.localidad}}</p>
+                      <p class="card-text"><b>Dirección:&nbsp;</b> {{usuario.direccion}}</p>
+                      <p class="card-text"><b>Registrado:&nbsp;</b> {{usuario.fecha_de_registro}}</p>
+                    </div>
+                </div>
+
+                <!--Aca empieza el formulario-->
+                
+                <form class='my-4' action="{% url "usuarios:detallar" id=id %}" method='POST' novalidate >
+                    <h4>Registrar un prestamo</h4>
+                    {% csrf_token %}
+                    
+                    {{ form | crispy }}
+
+                    <div class = 'd-grid gap-2'>
+                        <input type="submit" value='Guardar' class= 'btn btn-success'>
+                        <input type="reset" value='Limpiar' class= 'btn btn-secondary'>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                <!--Aca empieza el historial de prestamos-->
+                <h2>Historial de prestamos</h2>
+                <table class="table table-striped">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Libros prestados</th>
+                        <th scope="col">Fecha de devolución</th>
+                        <th scope="col">Devolución</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for prestamo in prestamos reversed %}
+                            <tr>
+                                <td>{{prestamo.fecha_de_prestamo}}</td>
+                                <td>
+                                    {% for libro in prestamo.libros.all %}
+                                    {{ libro.titulo }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{prestamo.fecha_de_devolucion}}</td>
+                                <td>
+                                    {% if prestamo.devuelto %}Realizada{% else %} <a class="btn btn-primary" href="{% url "usuarios:devolver" id=prestamo.id %}">Devolver</a>  {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}  
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+
+    
+    
+{% endblock 'content' %}
+

@@ -1,0 +1,33 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Editar libro{% endblock 'title' %}
+
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock styles %}
+
+
+
+{% block 'content' %}
+
+    {% load crispy_forms_tags %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="alert-success"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <form action="{% url "usuarios:editar" id=id %}" method='POST' novalidate>
+        {% csrf_token %}
+        
+        {{ form | crispy }}
+        
+        <input type="submit" value='guardar' class= 'btn-guardar'>
+    </form>
+{% endblock 'content' %}

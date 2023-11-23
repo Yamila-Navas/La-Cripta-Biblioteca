@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor La Cripta | {% block 'title' %}{% endblock 'title' %}</title>
+    <!--Bootstrap CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!--stilo local-->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Asegúrate de incluir jQuery antes de este script -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Select2 CSS y JS desde CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.full.min.js"></script>
+
+
+    {% block 'styles' %}{% endblock 'styles' %}
+</head>
+
+<body>
+    {% include "layout/partials/menu.html" %}
+
+    <main>
+        {% block 'content' %}{% endblock 'content' %}
+    </main>
+
+    {% block 'scripts' %}{% endblock 'scripts' %}
+    
+
+
+    <script>
+        $(document).ready(function () {
+            console.log("Script de inicialización de Select2 ejecutado");
+    
+            // Inicializar el campo de selección
+            $('[data-searchable="true"]').select2({
+                ajax: {
+                    url: function () {
+                        return $(this).data('ajax--url');
+                    },
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: data.results
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 1
+            });
+        });
+    </script>
+    
+</body>
+</html>

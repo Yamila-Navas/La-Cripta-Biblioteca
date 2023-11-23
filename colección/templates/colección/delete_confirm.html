@@ -1,0 +1,23 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Confirmar eliminación{% endblock 'title' %}
+
+{% block 'content' %}
+
+    <div class="card">
+        <h5 class="card-header text-center">Confirmar eliminación</h5>
+        <div class="card-body">
+          <h5 class="card-title text-center">¿Estás seguro de que deseas eliminar este libro?</h5>
+          <p class="card-text text-center">Libro: {{ libro.titulo }}</p>
+            <div class='d-flex justify-content-center'>
+                <form method="post" action="{% url 'colección:borrar' id=libro.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-warning mx-2 my-3" type="submit">Sí, eliminar</button>
+                </form>
+                <a class="btn btn-warning mx-2 my-3" href="{% url 'colección:listar' %}">Cancelar</a>
+            </div>
+               
+        </div>
+      </div>
+
+{% endblock 'content' %}

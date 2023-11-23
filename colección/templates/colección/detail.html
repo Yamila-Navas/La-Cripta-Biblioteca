@@ -1,0 +1,50 @@
+{% extends "layout/base.html" %}
+
+{% block 'title' %}Libro: nombre del libro{% endblock 'title' %}
+
+{% block 'content' %}
+
+    <div class="card mb-3" style="max-width: 700px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            {% if libro.portada %}
+                <img src="{{libro.portada.url}}" class="img-fluid rounded-start" alt="..." >
+            {% endif %}
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{libro.titulo}}</h5>
+              <p class="card-text"><b>Autor: &nbsp;</b>{{libro.autor}}</p>
+              <p class="card-text"><b>Publicado en: &nbsp;</b>{{libro.fecha_de_publicacion}}</p>
+              <p class="card-text"><b>Genero literario: &nbsp;</b>{{libro.genero}}</p>
+              <p class="card-text"><b>Idioma: &nbsp;</b>{{libro.idioma}}</p>
+              <p class="card-text"><b>Cantidad de paginas: &nbsp;</b>{{libro.numero_de_paginas}}</p>
+              <p class="card-text"><b>Fecha de ingreso: &nbsp;</b>{{libro.fecha_de_entrada}}</p>
+              <p class="card-text"><b>Disponible: &nbsp;</b>{% if libro.disponible %}Si{% else %}
+                No  &nbsp;
+            
+                <a data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">+</a>
+                  
+                <div class="row">
+                  <div class="col">
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                      <div class="card card-body">
+                        Prestado a {{prestadoA}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}</p>
+              
+            </div>
+          </div>
+          <div class='px-2'>
+            <p class="card-text"><small class="text-muted">{{libro.resumen}}</small></p>
+          </div>
+        </div>
+    </div>
+
+
+
+    
+{% endblock 'content' %}
